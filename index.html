@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Homeless Shelter Finder</title>
+  <style>
+    /* Basic styling */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    #map {
+      height: 100vh;
+      width: 100%;
+    }
+    .info-window {
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <h1 style="text-align: center;">Homeless Shelter Finder - Canada</h1>
+  <div id="map"></div>
+
+  <script>
+    // Initialize the map
+    function initMap() {
+      const canadaCenter = { lat: 56.1304, lng: -106.3468 }; // Center of Canada
+      const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 4,
+        center: canadaCenter,
+      });
+
+      // Example shelter data (replace with real data or API integration)
+      const shelters = [
+        {
+          name: "Shelter A",
+          position: { lat: 43.65107, lng: -79.347015 }, // Toronto
+          address: "123 Main St, Toronto, ON",
+        },
+        {
+          name: "Shelter B",
+          position: { lat: 45.4215, lng: -75.6972 }, // Ottawa
+          address: "456 Elm St, Ottawa, ON",
+        },
+        {
+          name: "Shelter C",
+          position: { lat: 49.2827, lng: -123.1207 }, // Vancouver
+          address: "789 Pine St, Vancouver, BC",
+        },
+      ];
+
+      // Add markers for each shelter
+      shelters.forEach((shelter) => {
+        const marker = new google.maps.Marker({
+          position: shelter.position,
+          map: map,
+          title: shelter.name,
+        });
+
+        // Info window for each marker
+        const infoWindow = new google.maps.InfoWindow({
+          content: `
+            <div class="info-window">
+              <h3>${shelter.name}</h3>
+              <p>${shelter.address}</p>
+            </div>
+          `,
+        });
+
+        marker.addListener("click", () => {
+          infoWindow.open(map, marker);
+        });
+      });
+    }
+  </script>
+
+  <!-- Replace YOUR_API_KEY with your actual Google Maps API key -->
+  <script async
+    src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&callback=initMap">
+  </script>
+</body>
+</html>
